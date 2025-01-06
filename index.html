@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Imagenes/favicon.webp">
+    <title>Generador de QR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 5px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-size: 1rem;
+            color: #555;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .qr-code {
+            margin-top: 20px;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+        #downloadButton {
+            margin-top: 10px;
+            display: none;
+            background-color: #28a745;
+        }
+        #downloadButton:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Código QR</h1>
+        <form id="qrForm">
+            <label for="title">Título:</label>
+            <input type="text" id="title" placeholder="Escribe un título..." required>
+            <label for="url">URL:</label>
+            <input type="url" id="url" placeholder="Escribe una URL válida..." required>
+            <label for="backgroundImage">Selecciona una imagen de fondo:</label>
+            <input type="file" id="backgroundImage" accept="image/*">
+            <button type="submit" title="Generar QR">Generar QR</button>
+        </form>
+        <div class="qr-code" id="qrCodeContainer">
+            <h2 id="qrTitle"></h2>
+            <canvas id="qrCanvas"></canvas>
+            <button id="downloadButton" title="Descargar QR Generado">Descargar QR</button>
+        </div>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrious"></script>
+    <script>
+        const qrForm = document.getElementById('qrForm');
+        const qrTitle = document.getElementById('qrTitle');
+        const qrCanvas = document.getElementById('qrCanvas');
+        const qrCodeContainer = document.getElementById('qrCodeContainer');
+        const downloadButton = document.getElementById('downloadButton');
+        const backgroundInput = document.getElementById('backgroundImage');
+
+        qrForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const url = document.getElementById('url').value;
+            const backgroundFile = backgroundInput.files[0];
+
+            if (title && url) {
+                qrTitle.textContent = title;
+
+                // Concatenar el título y la URL para el contenido del QR
+                const qrContent = `${title}\n${url}`;
+
+                // Crear el QR
+                const qr = new QRious({
+                    value: qrContent,
+                    size: 200,
+                    backgroundAlpha: 0,
+                });
+
+                // Dibujar el canvas con la imagen de fondo y el QR
+                const context = qrCanvas.getContext('2d');
+                const canvasSize = 300; // Tamaño del canvas
+                qrCanvas.width = canvasSize;
+                qrCanvas.height = canvasSize;
+                //qrCanvas.style.borderRadius = 25 + 'px';
+
+                // Limpiar el canvas
+                context.clearRect(0, 0, canvasSize, canvasSize);
+                
+                if (backgroundFile) {                    
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const backgroundImage = new Image();
+                        backgroundImage.src = event.target.result;
+                        backgroundImage.onload = () => {
+                            const colorThief = new ColorThief();
+                            // Obtener el color dominante de la imagen
+                            const dominantColor = colorThief.getColor(backgroundImage); // [r, g, b]
+                            const rgbColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;                            
+                            // Determinar si el color es claro u oscuro y ajustar el color del texto
+                            const brightness = 0.299 * dominantColor[0] + 0.587 * dominantColor[1] + 0.114 * dominantColor[2];
+                            const textColor = brightness > 128 ? 'black' : 'white';
+                            // Dibujar la imagen de fondo ajustada al tamaño del canvas
+                            context.drawImage(backgroundImage, 0, 0, canvasSize, canvasSize);
+
+                            // Dibujar el título
+                            console.log(textColor);
+                            context.font = 'bold 16px Arial';
+                            context.textAlign = 'center';
+                            //context.fillStyle = '#333';
+                            context.fillStyle = textColor;
+                            context.fillText(title, canvasSize / 2, 30);
+
+                            // Dibujar el QR encima de la imagen
+                            const qrImage = new Image();
+                            qrImage.src = qr.toDataURL();
+                            qrImage.onload = () => {
+                                context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
+
+                                // Mostrar el botón de descarga
+                                qrCodeContainer.style.display = 'block';
+                                downloadButton.style.display = 'inline-block';
+                            };
+                        };
+                    };
+                    reader.readAsDataURL(backgroundFile);                    
+                } else {
+                    // Si no se selecciona imagen, solo dibujar el título y el QR
+                    context.font = 'bold 16px Arial';
+                    context.textAlign = 'center';
+                    context.fillStyle = '#000';
+                    context.fillText(title, canvasSize / 2, 30);
+
+                    const qrImage = new Image();
+                    qrImage.src = qr.toDataURL();
+                    qrImage.onload = () => {
+                        context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
+
+                        // Mostrar el botón de descarga
+                        qrCodeContainer.style.display = 'block';
+                        downloadButton.style.display = 'inline-block';
+                    };
+                }                            
+            }
+        });
+
+        downloadButton.addEventListener('click', function () {
+            const qrImage = qrCanvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = qrImage;
+            //link.download = 'codigo-qr-con-fondo.png';
+            link.download = document.getElementById('title').value + '.png';
+            link.click();
+        });
+    </script>
+</body>
+</html>
