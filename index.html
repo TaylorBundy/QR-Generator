@@ -101,10 +101,11 @@
     </div>
     <footer>
         <p id="FooterText">&copy;</p>
-        <div class="ImgSocial" id="AllImgSocial">
-            <a href="https://www.facebook.com/marilyn6momsen" target="_blank"><img src="Imagenes/facebook.svg" class="imgsocial" alt="Facebook" id="facebook" onmouseover="Titulos()"> </a>
-            <a href="https://www.instagram.com/taylor_bundy" target="_blank"><img src="Imagenes/instagram.webp" class="imgsocial" alt="Instagram" id="instagram" onmouseover="Titulos()"> </a>
-            <a href="https://github.com/TaylorBundy" target="_blank"><img src="Imagenes/github.webp" class="imgsocial" alt="GitHub" id="github" onmouseover="Titulos()"> </a>
+        <!-- <canvas id="social"></canvas> -->
+        <div class="ImgSocial" id="AllImgSocial" >
+            <a href="https://www.facebook.com/marilyn6momsen" target="_blank" class="imgsociala"><img src="Imagenes/facebook.svg" class="imgsocial" alt="Facebook" id="facebook" onmouseover="Titulos()"> </a>
+            <a href="https://www.instagram.com/taylor_bundy" target="_blank" class="imgsociala"><img src="Imagenes/instagram.webp" class="imgsocial" alt="Instagram" id="instagram" onmouseover="Titulos()"> </a>
+            <a href="https://github.com/TaylorBundy" target="_blank" class="imgsociala"><img src="Imagenes/github.webp" class="imgsocial" alt="GitHub" id="github" onmouseover="Titulos()"> </a>
         </div>
     </footer>
     
@@ -148,8 +149,8 @@
 
                 // Limpiar el canvas
                 context.clearRect(0, 0, canvasSize, canvasSize);
-                
-                if (backgroundFile) {                    
+
+                if (backgroundFile) {
                     const reader = new FileReader();
                     reader.onload = function (event) {
                         const backgroundImage = new Image();
@@ -158,7 +159,7 @@
                             const colorThief = new ColorThief();
                             // Obtener el color dominante de la imagen
                             const dominantColor = colorThief.getColor(backgroundImage); // [r, g, b]
-                            const rgbColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;                            
+                            const rgbColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
                             // Determinar si el color es claro u oscuro y ajustar el color del texto
                             const brightness = 0.299 * dominantColor[0] + 0.587 * dominantColor[1] + 0.114 * dominantColor[2];
                             const textColor = brightness > 128 ? 'black' : 'white';
@@ -185,7 +186,7 @@
                             };
                         };
                     };
-                    reader.readAsDataURL(backgroundFile);                    
+                    reader.readAsDataURL(backgroundFile);
                 } else {
                     // Si no se selecciona imagen, solo dibujar el título y el QR
                     context.font = 'bold 16px Arial';
@@ -202,24 +203,26 @@
                         //qrCodeContainer.style.display = 'block';
                         //downloadButton.style.display = 'inline-block';
                     };
-                }  
+                }
                 if (plataforma.includes('Win')) {
                     //qrCodeContainer.style.display = 'flex';
                     qrCodeContainer.style.display = 'grid';
+                    //qrCodeContainer.style.height = 'auto';
                     downloadButton.style.maxWidth = '30%';
                     downloadButton.style.margin = 'auto 10px';
                 } else {
-                    qrCodeContainer.style.display = 'grid';                    
+                    qrCodeContainer.style.display = 'grid';
                     qrCodeContainer.style.padding = '5px';
                     downloadButton.style.maxWidth = '50%';
                     downloadButton.style.margin = 'auto';
                 }
                 //qrCodeContainer.style.display = 'flex';
+                qrCodeContainer.style.height = 'auto';
                 downloadButton.style.display = 'flex';
-                //downloadButton.style.marginLeft = 'auto';                          
-                //downloadButton.style.marginRight = 'auto';                
+                //downloadButton.style.marginLeft = 'auto';
+                //downloadButton.style.marginRight = 'auto';
                 downloadButton.style.flex = 1;
-                downloadButton.style.justifyContent = 'center';                
+                downloadButton.style.justifyContent = 'center';
             }
         });
         //const fileInput = document.getElementById('backgroundImage');
@@ -231,7 +234,7 @@
         });
 
         const texto = document.getElementById('FooterText');
-        if (plataforma.includes('Android')) {            
+        if (plataforma.includes('Android')) {
             document.getElementById('FooterText').textContent = texto.textContent + ' Generador QR - By Taylor Bundy';
         } else if (plataforma.includes('Win')) {
             document.getElementById('FooterText').textContent = texto.textContent + ' 2025 Proyecto Web - Generador QR - By Taylor Bundy';
@@ -246,5 +249,6 @@
             link.click();
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -95,6 +95,7 @@ button:hover {
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
     border-radius: 5px;
     border: 1px solid blue;    
+    height: 100px;
 }
 .qrGenerado {
     display: flex;
@@ -114,6 +115,7 @@ canvas {
 
 footer {
     max-width: 600px;
+    height: 100px;
     margin: 5px auto;
     text-align: center;
     padding: 10px 20px;
@@ -122,28 +124,73 @@ footer {
     border: 2px solid #333;
     color: #333;
     border-radius: 5px;
+    /* position: relative; */
 }
 
 .ImgSocial {
     display: flex;
-    justify-content: center;
+    width: 600px;
+    height: 100%;
+    /* justify-content: center; */
+    align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .ImgSocial img {
     padding: 5px;
     width: 30px;
     height: 30px;
+    /* top: 30px; */
+    /* bottom: 0; */
+    position: relative;
+}
+
+.ImgSocial a {
+    position: relative;
+    height: 40px;
+    /* margin: 0; */
+    /* display: flex; */
+    /* top: 0; */
+    /* bottom: 0; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
 }
 
 footer p {
-    margin: 0;
+    width: 600px;
+    margin: auto;
     padding: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
+
+/* #social {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #imgsocial {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50px;
+  } */
 
 @media only screen and (min-width: 360px) and (max-width: 501px) and (orientation: portrait) {
     .container {
         max-width: 90%;
         padding: 0 20px;
+    }
+    h1 {
+        font-size: 25px;
+        padding: 5px 10px;
     }
 
     h2 {
@@ -201,10 +248,19 @@ footer p {
 
     footer {
         max-width: 90%;
+        height: 70px;
         padding: 5px 20px;
     }
     footer p {
-        padding: 10px 10px 0 10px;
+        width: 100%;
+        /* padding: 10px 10px 0 10px; */
+        padding: 0;
+    }
+    .ImgSocial {
+        width: 100%;
+        justify-content: center;
+        height: 50px;
+        top: 20px;        
     }
     .ImgSocial img {
         padding: 0 5px;
