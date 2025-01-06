@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="Imagenes/favicon.webp">
+    <link rel="stylesheet" href="styles.css">
     <title>Generador de QR</title>
-    <style>
+    <!-- <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -23,6 +24,7 @@
         }
         h1 {
             color: #333;
+            margin: 5px 0;
         }
         label {
             font-size: 1rem;
@@ -34,8 +36,9 @@
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 20px;
+            /* margin-top: 5px; */
+            margin: 5px 0;
+            /* margin-bottom: 20px; */
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -52,10 +55,14 @@
             background-color: #0056b3;
         }
         .qr-code {
-            margin-top: 20px;
+            /* margin-top: 20px; */
+            display: flex;
         }
         canvas {
-            margin-top: 20px;
+            /* margin-top: 20px; */
+            /* margin-top: 0; */
+            margin: 10px;
+            flex: 1;
         }
         #downloadButton {
             margin-top: 10px;
@@ -65,7 +72,7 @@
         #downloadButton:hover {
             background-color: #218838;
         }
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="container">
@@ -75,17 +82,31 @@
             <input type="text" id="title" placeholder="Escribe un título..." required>
             <label for="url">URL:</label>
             <input type="url" id="url" placeholder="Escribe una URL válida..." required>
-            <label for="backgroundImage">Selecciona una imagen de fondo:</label>
-            <input type="file" id="backgroundImage" accept="image/*">
+            <div class="uploadFile">
+                <label for="backgroundImage" class="custom-file-button">Selecciona una imagen:</label>
+                <input type="file" id="backgroundImage" accept="image/*">
+                <!-- <span class="file-name" id="file-name">No se ha seleccionado ningún archivo</span> -->
+                <input type="text" class="file-name" id="file-name" placeholder="No se ha seleccionado ningún archivo">
+            </div>
             <button type="submit" title="Generar QR">Generar QR</button>
         </form>
         <div class="qr-code" id="qrCodeContainer">
+            <!-- <h2 id="qrTitle" style="display: none;"></h2> -->
             <h2 id="qrTitle"></h2>
-            <canvas id="qrCanvas"></canvas>
-            <button id="downloadButton" title="Descargar QR Generado">Descargar QR</button>
+            <div class="qrGenerado">
+                <canvas id="qrCanvas"></canvas>
+                <button id="downloadButton" title="Descargar QR Generado">Descargar QR</button>
+            </div>
         </div>
     </div>
-
+    <footer>
+        <p id="FooterText">&copy;</p>
+        <div class="ImgSocial" id="AllImgSocial">
+            <a href="https://www.facebook.com/marilyn6momsen" target="_blank"><img src="Imagenes/facebook.svg" class="imgsocial" alt="Facebook" id="facebook" onmouseover="Titulos()"> </a>
+            <a href="https://www.instagram.com/taylor_bundy" target="_blank"><img src="Imagenes/instagram.webp" class="imgsocial" alt="Instagram" id="instagram" onmouseover="Titulos()"> </a>
+            <a href="https://github.com/TaylorBundy" target="_blank"><img src="Imagenes/github.webp" class="imgsocial" alt="GitHub" id="github" onmouseover="Titulos()"> </a>
+        </div>
+    </footer>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrious"></script>
@@ -96,6 +117,7 @@
         const qrCodeContainer = document.getElementById('qrCodeContainer');
         const downloadButton = document.getElementById('downloadButton');
         const backgroundInput = document.getElementById('backgroundImage');
+        const plataforma = navigator.userAgent;
 
         qrForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -158,8 +180,8 @@
                                 context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
 
                                 // Mostrar el botón de descarga
-                                qrCodeContainer.style.display = 'block';
-                                downloadButton.style.display = 'inline-block';
+                                //qrCodeContainer.style.display = 'block';
+                                //downloadButton.style.display = 'inline-block';
                             };
                         };
                     };
@@ -177,12 +199,43 @@
                         context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
 
                         // Mostrar el botón de descarga
-                        qrCodeContainer.style.display = 'block';
-                        downloadButton.style.display = 'inline-block';
+                        //qrCodeContainer.style.display = 'block';
+                        //downloadButton.style.display = 'inline-block';
                     };
-                }                            
+                }  
+                if (plataforma.includes('Win')) {
+                    //qrCodeContainer.style.display = 'flex';
+                    qrCodeContainer.style.display = 'grid';
+                    downloadButton.style.maxWidth = '30%';
+                    downloadButton.style.margin = 'auto 10px';
+                } else {
+                    qrCodeContainer.style.display = 'grid';                    
+                    qrCodeContainer.style.padding = '5px';
+                    downloadButton.style.maxWidth = '50%';
+                    downloadButton.style.margin = 'auto';
+                }
+                //qrCodeContainer.style.display = 'flex';
+                downloadButton.style.display = 'flex';
+                //downloadButton.style.marginLeft = 'auto';                          
+                //downloadButton.style.marginRight = 'auto';                
+                downloadButton.style.flex = 1;
+                downloadButton.style.justifyContent = 'center';                
             }
         });
+        //const fileInput = document.getElementById('backgroundImage');
+        const fileNameSpan = document.getElementById('file-name');
+
+        backgroundImage.addEventListener('change', () => {
+            const fileName = backgroundImage.files[0] ? backgroundImage.files[0].name : 'No se ha seleccionado ningún archivo';
+            fileNameSpan.value = fileName;
+        });
+
+        const texto = document.getElementById('FooterText');
+        if (plataforma.includes('Android')) {            
+            document.getElementById('FooterText').textContent = texto.textContent + ' Generador QR - By Taylor Bundy';
+        } else if (plataforma.includes('Win')) {
+            document.getElementById('FooterText').textContent = texto.textContent + ' 2025 Proyecto Web - Generador QR - By Taylor Bundy';
+        }
 
         downloadButton.addEventListener('click', function () {
             const qrImage = qrCanvas.toDataURL('image/png');

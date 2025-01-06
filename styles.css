@@ -1,0 +1,212 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+.container {
+    max-width: 600px;
+    margin: 5px auto;
+    padding: 20px;
+    background-color: #a6caf0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #333;
+}
+form {
+    display: grid;
+    /* margin: 5px 0; */
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: #d7e4f2;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    border: 1px solid blue;
+}
+input[type="file"] {
+    display: none;
+}
+.custom-file-button {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex: 1;
+}
+.file-name {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333;
+    flex: 2;
+}
+.uploadFile {
+    display: flex;
+}
+h1 {
+    color: #333;
+    margin: 5px 0;
+    background-color: #d7e4f2;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+h2 {
+    margin: 0;
+}
+label {
+    font-size: 1rem;
+    color: #555;
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+}
+input {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.qr-code {
+    /* display: flex; */
+    display: grid;
+    background-color: #d7e4f2;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    border: 1px solid blue;    
+}
+.qrGenerado {
+    display: flex;
+}
+canvas {
+    margin: auto 10px 10px;
+    flex: 1;
+}
+#downloadButton {
+    margin-top: 10px;
+    display: none;
+    background-color: #28a745;
+}
+#downloadButton:hover {
+    background-color: #218838;
+}
+
+footer {
+    max-width: 600px;
+    margin: 5px auto;
+    text-align: center;
+    padding: 10px 20px;
+    /* background-color: #333; */
+    background-color: #a6caf0;
+    border: 2px solid #333;
+    color: #333;
+    border-radius: 5px;
+}
+
+.ImgSocial {
+    display: flex;
+    justify-content: center;
+}
+
+.ImgSocial img {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+footer p {
+    margin: 0;
+    padding: 10px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 501px) and (orientation: portrait) {
+    .container {
+        max-width: 90%;
+        padding: 0 20px;
+    }
+
+    h2 {
+        display: none;
+    }
+
+    .qrGenerado {
+        display: grid;
+    }
+
+    form {
+        /* margin: 5px 0; */
+        /* margin-bottom: 5px; */
+        padding: 5px;
+        border: 1px solid blue;
+    }
+
+    .qr-code {
+        margin-bottom: 5px;
+    }
+
+    label {
+        margin: 0;
+    }
+
+    input {
+        padding: 10px 5px;
+    }
+
+    .custom-file-button {
+        background-image: url('Imagenes/upload.webp');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        color: transparent;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .file-name {
+        flex: 9;
+    }
+
+    button {
+        width: 50%;
+    }
+
+    canvas {
+        margin: 5px 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    footer {
+        max-width: 90%;
+        padding: 5px 20px;
+    }
+    footer p {
+        padding: 10px 10px 0 10px;
+    }
+    .ImgSocial img {
+        padding: 0 5px;
+    }
+}
