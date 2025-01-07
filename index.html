@@ -131,7 +131,8 @@
                 qrTitle.textContent = title;
 
                 // Concatenar el título y la URL para el contenido del QR
-                const qrContent = `${title}\n${url}`;
+                //const qrContent = `${title}\n${url}`;
+                const qrContent = `${url}`;
 
                 // Crear el QR
                 const qr = new QRious({
@@ -172,6 +173,7 @@
                             context.textAlign = 'center';
                             //context.fillStyle = '#333';
                             context.fillStyle = textColor;
+                            //context.fillText(title, canvasSize / 2, 30);
                             context.fillText(title, canvasSize / 2, 30);
 
                             // Dibujar el QR encima de la imagen
