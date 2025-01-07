@@ -4,6 +4,7 @@ const contenedor = document.querySelector('.ImgSocial');
 const images = document.querySelectorAll('.imgsocial');
 const facebook = document.querySelector('#facebook');
 const instagram = document.querySelector('#instagram');
+const twitter = document.querySelector('#twitter');
 const github = document.querySelector('#github');
 const link = document.getElementById('estilo');
 const titleInput = document.querySelector('#title');
@@ -142,6 +143,9 @@ function Titulos() {
     }
     if (github.onmouseover) {
       github.title = 'Ir a los repositorios de GitHub de Taylor Bundy';
+    }
+    if (twitter.onmouseover) {
+      twitter.title = 'Ir a Twitter de Taylor Bundy';
     }
     if (titleInput.onmouseover) {
       titleInput.title = 'Completar Campo. (Opcional)';
