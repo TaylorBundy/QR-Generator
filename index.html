@@ -147,12 +147,12 @@
                     // Crear el QR
                     const qr = new QRious({
                         value: qrContent,
-                        size: 300,
+                        size: 200,
                         backgroundAlpha: 0,
                     });
                     // Dibujar el canvas con la imagen de fondo y el QR
                     const context = qrCanvas.getContext('2d');
-                    const canvasSize = 300; // Tamaño del canvas
+                    const canvasSize = 200; // Tamaño del canvas
                     //const canvasSize = 400;
                     qrCanvas.width = canvasSize;
                     qrCanvas.height = canvasSize;
@@ -186,7 +186,7 @@
                                 const qrImage = new Image();
                                 qrImage.src = qr.toDataURL();
                                 qrImage.onload = () => {
-                                    context.drawImage(qrImage, (canvasSize - 300) / 2, 50, 300, 300);
+                                    context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
                                 };
                             };
                         };
@@ -200,8 +200,8 @@
                         const qrImage = new Image();
                         qrImage.src = qr.toDataURL();
                         qrImage.onload = () => {
-                            //context.drawImage(qrImage, (canvasSize - 300) / 2, 50, 300, 300);
-                            context.drawImage(qrImage, (canvasSize - 300) / 2, 50, 300, 300);
+                            //context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
+                            context.drawImage(qrImage, (canvasSize - 200) / 2, 50, 200, 200);
                         };
                     }
                     if (plataforma.includes('Win')) {
